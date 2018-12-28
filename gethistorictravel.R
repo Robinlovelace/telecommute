@@ -1,11 +1,12 @@
 yrs = seq(from = 1981, to = 2011, by = 10)
-yr = yrs[3]
+yr = yrs[1]
 
 for(i in seq_along(yrs)) {
 yr = yrs[i]
-lad_sf = readRDS(paste0("~/ITSLeeds/historictraveldata/lad_", yr, ".Rds"))
-lad = st_set_geometry(lad_sf, NULL)
+lad = readRDS(paste0("~/ITSLeeds/historictraveldata/sas_", yr, ".Rds"))
+# lad = st_set_geometry(lad, NULL)
 lad = select_if(lad, is.numeric)
+lad = select(lad, -matches("East|North|with"))
 
 modes_min = c(
   car_driv = sum(lad %>% select(starts_with("car_driv")), na.rm = T),
